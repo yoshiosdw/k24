@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
@@ -64,6 +65,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store']);
+
+	Route::get('/users', [UserController::class, 'index'])->name('users.index');
+	Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+	Route::post('/users', [UserController::class, 'store'])->name('users.store');
+	Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+	Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+	Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+	Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
+
+	Route::get('/user-create', [UserController::class, 'create'])->name('user.create');
+	Route::post('/user-store', [UserController::class, 'store'])->name('user.store');
 	Route::get('/login', function () {
 		return view('dashboard');
 	})->name('sign-up');
